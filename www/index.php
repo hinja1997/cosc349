@@ -36,11 +36,26 @@ $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
 $q = $pdo->query("SELECT * FROM WordConverter");
 
+
 while($row = $q->fetch()){
   echo "<tr><td>".$row["word"]."</td><td>".$row["lang"]."</td></tr>\n";
 }
-
+    
 ?>
+
 </table>
+
+<p>Add a new word to the table:</p>
+<form action="insert.php" method="post">
+    <p>
+        <label for="word">Word:</label>
+        <input type="text" name="word" id="word">
+    </p>
+    <p>
+        <label for="language">Language:</label>
+        <input type="text" name="language" id="language">
+    </p>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
