@@ -25,7 +25,7 @@ th, td {
 
 <?php
  
-$db_host   = '192.168.4.11'
+$db_host   = '192.168.2.31';
 $db_name   = 'fvision';
 $db_user   = 'webuser';
 $db_passwd = 'insecure_db_pw';
