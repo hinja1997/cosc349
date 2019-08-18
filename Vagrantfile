@@ -59,4 +59,10 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
+  config.vm.define "convertserver" do |convertserver|
+    convertserver.vm.hostname = "convertserver"
+    convertserver.vm.network "private_network", ip: "192.168.2.32"
+
+  end
+
 end
