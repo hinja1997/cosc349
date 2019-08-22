@@ -61,8 +61,19 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "convertserver" do |convertserver|
     convertserver.vm.hostname = "convertserver"
+    
+    convertserver.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
     convertserver.vm.network "private_network", ip: "192.168.2.32"
 
-  end
+    convertserver.vm.provision "shell", inline: <<-SHELL
+      apt-get update
+      apt-get install -y apache2 php libapache2-mod-php php-mysql
 
+      cp /vagrant/test2-website.conf /etc/apache2/sites-available/
+      a2ensite test2-website
+      a2dissite 000-default
+      service apache2 reload
+    SHELL
+  end
 end

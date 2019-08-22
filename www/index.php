@@ -19,8 +19,8 @@ th, td {
 <h1>Database test page</h1>
 
 <p>Showing contents of WordConverter table:</p>
-
-<table border="1">
+<p><button class="btnConvert">Convert Word to Language</button></p>
+<br><table border="1">
 <tr><th>Word</th><th>Language</th></tr>
 
 <?php
@@ -43,7 +43,7 @@ while($row = $q->fetch()){
     
 ?>
 
-</table>
+</table></br>
 
 <p>Add a new word to the table:</p>
 <form action="insert.php" method="post">
