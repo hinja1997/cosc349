@@ -20,11 +20,9 @@ th, td {
 
 <p>Translated Words Below:</p>
 <br><table border="1">
-<tr><th>Word in English</th><th>Language</th><th>Translated Word</th></tr>
+<tr><th>Word</th></tr>
 
 <?php
-    
-    $language = $_POST['language'];
     $db_host   = '192.168.2.31';
     $db_name   = 'fvision';
     $db_user   = 'webuser';
@@ -34,21 +32,20 @@ th, td {
 
     $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-    $q = $pdo->query("SELECT * FROM WordConverter");
+    $getData = $pdo->query("SELECT * FROM words");
 
 
-    while($row = $q->fetch()){
-        echo "<tr><td>".$row["word"]."</td><td>".$row["lang"]."</td><td>".$row["translated_word"]."</td></tr>\n";
+    while($row = $getData->fetch()){
+        echo "<tr><td>".$row["word"]."</td></tr>\n";
     }
-    
 ?>
 
 </table></br>
 
 <?php
-    function getSelectSession($val, $val2) {
-       if ($_SESSION[$val] == $val2) {
-           echo "selected";
+    function getSelectedLanguage($val1, $val2) {
+       if ($_SESSION[$val1] == $val2) {
+           echo "selected language";
        }
     }
 ?>
@@ -59,17 +56,19 @@ th, td {
         <label for="word">Word:</label>
         <input type="text" name="word" id="word">
     </p>
-     <p> Translate from English to:
-           <select name="language">
-             <option value="french" <?php getSelectSession("lang", "french"); ?>>French</option>
-             <option value="italian" <?php getSelectSession("lang", "italian"); ?>>Italian</option>
-             <option value="spanish" <?php getSelectSession("lang", "spanish"); ?>>Spanish</option>
-             <option value="portugese"<?php getSelectSession("lang", "portugese"); ?>>Portugese</option>
-           </select>
-</p>
-    <input type="submit" value="Submit">
+<input type="submit" value="Add"></input>
 </form>
 
-
+<p>Choose a language to convert the table to:</p>
+<form action="index.php" method="post">
+     <p> Translate the table to:
+           <select name="language">
+             <option value="french" <?php getSelectedLanguage("lang", "french"); ?>>French</option>
+             <option value="italian" <?php getSelectedLanguage("lang", "italian"); ?>>Italian</option>
+             <option value="spanish" <?php getSelectedLanguage("lang", "spanish"); ?>>Spanish</option>
+           </select>
+</p>
+<input type="submit" value="Translate"></input>
+</form>
 </body>
 </html>

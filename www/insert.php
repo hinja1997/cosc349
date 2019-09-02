@@ -9,7 +9,7 @@ $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
 $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
     
-$q1 = $pdo->query("INSERT INTO WordConverter (word, lang) VALUES ('$_POST[word]','$_POST[language]')");
+$q1 = $pdo->query("INSERT INTO words (word) VALUES ('$_POST[word]')");
     
 header('Location: ' . $_SERVER["HTTP_REFERER"] );
 exit;
