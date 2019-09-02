@@ -70,8 +70,8 @@ Vagrant.configure("2") do |config|
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
 
-      cp /vagrant/test2-website.conf /etc/apache2/sites-available/
-      a2ensite test2-website
+      cp /vagrant/test-website.conf /etc/apache2/sites-available/
+      a2ensite test-website
       a2dissite 000-default
       service apache2 reload
     SHELL
