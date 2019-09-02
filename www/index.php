@@ -1,19 +1,22 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <h1>Date Language Converter</h1>
-  </head>
+<head><H1>Date Language Converter</H1><STYLE type="text/css">
+ H1 { text-align: center}
+</STYLE></head>
 
   <body>
+<STYLE type="text/css">
+ body { text-align: center}
+</STYLE>
     <p> <?php $date = file_get_contents("http://192.168.2.32?language=english");?> </p>
-    <p>NZ Date in English: <?php echo "$date"; ?></p>
+    <p><b>NZ Date in English: </b><?php echo "$date"; ?></p>
     
     <p id="output"></p>
     <?php
       session_start();
 
       if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Translate'])){
-      func();
+          func();
       }
       
       function func(){
@@ -27,26 +30,25 @@
 
           $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-      if($language == "french"){
-          $fre = file_get_contents("http://192.168.2.32?language=french");
-          $_SESSION['dates'] = "<p> Date in French: $fre </p>";
-          $q = $pdo->query("UPDATE dateToConvert SET lang = 'french' WHERE ID='ID'");
-      } else if($language == "italian"){
-          $ita = file_get_contents("http://192.168.2.32?language=italian");
-          $_SESSION['dates'] = "<p> Date in Italian: $ita </p>";
-          $q = $pdo->query("UPDATE dateToConvert SET lang = 'italian' WHERE ID='ID'");
-      } else if($language == "spanish"){
-          $spa = file_get_contents("http://192.168.2.32?language=spanish");
-          $_SESSION['dates'] = "<p> Date in Spanish: $spa </p>";
-          $q = $pdo->query("UPDATE dateToConvert SET lang = 'spanish' WHERE ID='ID'");
-      } else if($language == "portugese"){
-          $por = file_get_contents("http://192.168.2.32?language=portugese");
-          $_SESSION['dates'] = "<p> Date in Portugese: $por </p>";
-          $q = $pdo->query("UPDATE dateToConvert SET lang = 'portugese' WHERE ID='ID'");
+          if($language == "french"){
+              $fre = file_get_contents("http://192.168.2.32?language=french");
+              $_SESSION['dates'] = "<p><b> Date in French: </b>$fre </p>";
+              $q = $pdo->query("UPDATE dateToConvert SET lang = 'french' WHERE ID='ID'");
+          } else if($language == "italian"){
+              $ita = file_get_contents("http://192.168.2.32?language=italian");
+              $_SESSION['dates'] = "<p><b> Date in Italian:</b> $ita </p>";
+              $q = $pdo->query("UPDATE dateToConvert SET lang = 'italian' WHERE ID='ID'");
+          } else if($language == "spanish"){
+              $spa = file_get_contents("http://192.168.2.32?language=spanish");
+              $_SESSION['dates'] = "<p><b> Date in Spanish:</b> $spa </p>";
+              $q = $pdo->query("UPDATE dateToConvert SET lang = 'spanish' WHERE ID='ID'");
+          } else if($language == "portugese"){
+              $por = file_get_contents("http://192.168.2.32?language=portugese");
+              $_SESSION['dates'] = "<p><b> Date in Portugese: </b> $por </p>";
+              $q = $pdo->query("UPDATE dateToConvert SET lang = 'portugese' WHERE ID='ID'");
+          }
       }
-      }
-
-    ?>
+?>
     
     <?php
       

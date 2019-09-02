@@ -2,39 +2,62 @@
 <body>
 
 <?php
+    
+    $format = "l d F Y";
+    date_default_timezone_set('NZ');
 
     if(strcmp($_GET['language'], "english") == 0){
         $date = new DateTime();
         $nz_date = new DateTimeZone('Pacific/Auckland');
         $date->setTimezone($nz_date);
-        echo $date->format('l d F Y');
+        echo $date->format($format);
     }
     if(strcmp($_GET['language'], "french") == 0){
-        /* Set locale to Dutch */
-        setlocale(LC_ALL, 'nl_NL');
-
-        /* Output: vrijdag 22 december 1978 */
-        echo strftime("%A %e %B %Y", mktime(0, 0, 0, 12, 22, 1978));
-
-        /* try different possible locale names for german as of PHP 4.3.0 */
-        $loc_de = setlocale(LC_ALL, 'de_DE@euro', 'de_DE', 'de', 'ge');
-        echo "Preferred locale for german on this system is '$loc_de'";
-    
+        echo dateToFrench("now", $format);
     }
     if(strcmp($_GET['language'], "spanish") == 0){
-        setlocale(LC_TIME, 'es_ES', 'Spanish_Spain', 'Spanish');
-        $date = date('F j, Y');
-        echo strftime('%d %B %Y',strtotime($date));
+        echo dateToFrench("now", $format);
     }
     if(strcmp($_GET['language'], "italian") == 0){
-        $datetime = new DateTime();
-        $datetime->setlocale(LC_TIME, 'it_IT.UTF-8');
-        echo strftime("%B %e, %G");
+        echo dateToItalian("now", $format);
     }
     if(strcmp($_GET['language'], "portugese") == 0){
-        $datetime = new DateTime();
-        $datetime->setlocale(LC_TIME, 'pt_PT.UTF-8');
-        echo strftime("%B %e, %G");
+        echo dateToPortugese("now", $format);
+    }
+?>
+
+<?php
+    function dateToFrench($date, $format)
+    {
+        $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $french_days = array('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche');
+        $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $french_months = array('Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre');
+        return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format, strtotime($date))));
+    }
+    
+    function dateToSpanish($date, $format) {
+        $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $spanish_days = array('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo');
+        $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $spanish_months = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+        return str_replace($english_months, $spanish_months, str_replace($english_days, $spanish_days, date($format, strtotime($date))));
+    }
+    
+    function dateToItalian($date, $format) {
+        $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $italian_days = array('Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica');
+        $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $italian_months = array('Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre');
+        return str_replace($english_months, $italian_months, str_replace($english_days, $italian_days, date($format, strtotime($date))));
+    }
+    
+    function dateToPortugese($date, $format) {
+        $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+        $portugese_days = array('Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo');
+        $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+        $portugese_months = array('Janeiro', 'Fevereiro', 'Fevereiro', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro');
+        return str_replace($english_months, $portugese_months, str_replace($english_days, $portugese_days, date($format, strtotime($date))));
     }
 ?>
 
