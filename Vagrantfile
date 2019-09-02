@@ -61,21 +61,27 @@ Vagrant.configure("2") do |config|
     SHELL
   end
 
-  config.vm.define "convertserver" do |convertserver|
-   
-    convertserver.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+  config.vm.define "translateserver" do |translateserver|
+    translateserver.vm.hostname = "translateserver"
+ 
+    translateserver.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+    
+    translateserver.vm.network "private_network", ip: "192.168.2.32"
 
-    convertserver.vm.network "private_network", ip: "192.168.2.32"
+    translateserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-    convertserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"] 
-
-    convertserver.vm.provision "shell", inline: <<-SHELL
+    translateserver.vm.provision "shell", inline: <<-SHELL
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
-
-      cp /vagrant/convert-website.conf /etc/apache2/sites-available/
-      a2ensite convert-website
+            
+      # Change VM's translateserver's configuration to use shared folder.
+      # (Look inside translate-website.conf for specifics.)
+      cp /vagrant/translate-website.conf /etc/apache2/sites-available/
+      # activate our website configuration ...
+      a2ensite translate-website
+      # ... and disable the default website provided with Apache
       a2dissite 000-default
+      # Reload the webserver configuration, to pick up our changes
       service apache2 reload
     SHELL
   end

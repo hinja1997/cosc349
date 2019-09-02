@@ -3,4 +3,4 @@ CREATE TABLE dateToConvert (
   lang varchar(100)
 );
 
-INSERT INTO dateToConvert (ID, lang) values ('ID', 'English');
+INSERT INTO dateToConvert (ID, lang) values ('ID', 'english');
