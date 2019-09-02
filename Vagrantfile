@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-# A Vagrantfile to set up two VMs, a webserver and a database server,
+# A Vagrantfile to set up three VMs, two webservers and a database server,
 # connected together using an internal network with manually-assigned
 # IP addresses for the VMs.
 
