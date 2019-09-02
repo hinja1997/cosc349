@@ -1,74 +1,102 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!DOCTYPE HTML>
 <html>
-<head><title>Language Converter</title>
-<style>
-th { text-align: left; }
+  <head>
+    <h1>Date Language Converter</h1>
+  </head>
 
-table, th, td {
-  border: 2px solid grey;
-  border-collapse: collapse;
-}
+  <body>
+    <p> <?php $date = file_get_contents("http://192.168.2.32?language=english");?> </p>
+    <p>NZ Date in English: <?php echo "$date"; ?></p>
+    
+    <p id="output"></p>
+    <?php
+      session_start();
 
-th, td {
-  padding: 0.2em;
-}
-</style>
-</head>
+      if($_SERVER['REQUEST_METHOD'] == "POST" and isset($_POST['Translate'])){
+      func();
+      }
+      
+      function func(){
+          $language = $_POST['language'];
+          $db_host   = '192.168.2.31';
+          $db_name   = 'fvision';
+          $db_user   = 'webuser';
+          $db_passwd = 'insecure_db_pw';
 
-<body>
-<h1>Database test page</h1>
+          $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
-<p>Translated Words Below:</p>
-<br><table border="1">
-<tr><th>Word</th></tr>
+          $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-<?php
-    $db_host   = '192.168.2.31';
-    $db_name   = 'fvision';
-    $db_user   = 'webuser';
-    $db_passwd = 'insecure_db_pw';
+      if($language == "french"){
+          $fre = file_get_contents("http://192.168.2.32?language=french");
+          $_SESSION['dates'] = "<p> Date in French: $fre </p>";
+          $q = $pdo->query("UPDATE dateToConvert SET lang = 'french' WHERE ID='ID'");
+      } else if($language == "italian"){
+          $ita = file_get_contents("http://192.168.2.32?language=italian");
+          $_SESSION['dates'] = "<p> Date in Italian: $ita </p>";
+          $q = $pdo->query("UPDATE dateToConvert SET lang = 'italian' WHERE ID='ID'");
+      } else if($language == "spanish"){
+          $spa = file_get_contents("http://192.168.2.32?language=spanish");
+          $_SESSION['dates'] = "<p> Date in Spanish: $spa </p>";
+          $q = $pdo->query("UPDATE dateToConvert SET lang = 'spanish' WHERE ID='ID'");
+      } else if($language == "portugese"){
+          $por = file_get_contents("http://192.168.2.32?language=portugese");
+          $_SESSION['dates'] = "<p> Date in Portugese: $por </p>";
+          $q = $pdo->query("UPDATE dateToConvert SET lang = 'portugese' WHERE ID='ID'");
+      }
+      }
 
-    $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
+    ?>
+    
+    <?php
+      
+      $db_host   = '192.168.2.31';
+      $db_name   = 'fvision';
+      $db_user   = 'webuser';
+      $db_passwd = 'insecure_db_pw';
 
-    $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+      $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
-    $getData = $pdo->query("SELECT * FROM words");
+      $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+
+      $q = $pdo->query("SELECT * FROM dateToConvert");
+        
+        while($row = $q->fetch()){
+            $default = $row["lang"];
+            if($default == $language){
+                header("refresh: 0;");
+            }
+        }
+
+    $_SESSION['date'] = $default;
+    ?>
+
+    <?php
 
 
-    while($row = $getData->fetch()){
-        echo "<tr><td>".$row["word"]."</td></tr>\n";
-    }
-?>
+      function getSelectSession($val1, $val2)
+      {
+      if ($_SESSION[$val1] == $val2) {
+      echo "selected language";
+      }
+      }
+      ?>
 
-</table></br>
-
-<?php
-    function getSelectedLanguage($val1, $val2) {
-       if ($_SESSION[$val1] == $val2) {
-           echo "selected language";
-       }
-    }
-?>
-
-<p>Add a new word to the table:</p>
-<form action="insert.php" method="post">
-    <p>
-        <label for="word">Word:</label>
-        <input type="text" name="word" id="word">
-    </p>
-<input type="submit" value="Add"></input>
-</form>
-
-<p>Choose a language to convert the table to:</p>
-<form action="index.php" method="post">
-     <p> Translate the table to:
+     <form action="index.php" method="post">
+         <p> Convert from English to:
            <select name="language">
-             <option value="french" <?php getSelectedLanguage("lang", "french"); ?>>French</option>
-             <option value="italian" <?php getSelectedLanguage("lang", "italian"); ?>>Italian</option>
-             <option value="spanish" <?php getSelectedLanguage("lang", "spanish"); ?>>Spanish</option>
+             <option value="french" <?php getSelectSession("lang", "french"); ?>>French</option>
+             <option value="italian" <?php getSelectSession("lang", "italian"); ?>>Italian</option>
+             <option value="spanish" <?php getSelectSession("lang", "spanish"); ?>>Spanish</option>
+             <option value="portugese" <?php getSelectSession("lang", "portugese"); ?>>Portugese</option>
            </select>
-</p>
-<input type="submit" value="Translate"></input>
-</form>
-</body>
+           <input type="submit" name="Translate" value="Translate"></input>
+       </form>
+
+    <?php
+      echo $_SESSION['dates'];
+      $_SESSION['dates'] = "";
+      ?>
+    
+  </body>
 </html>
