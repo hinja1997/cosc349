@@ -35,8 +35,8 @@ Vagrant.configure("2") do |config|
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
       cp /vagrant/main-website.conf /etc/apache2/sites-available/
-      chmod 777 /cosc349
-      chmod 777 /cosc349/www
+      chmod 777 /vagrant
+      chmod 777 /vagrant/www
       a2ensite main-website
       a2dissite 000-default
       service apache2 reload
@@ -51,9 +51,9 @@ Vagrant.configure("2") do |config|
       apt-get update
       apt-get install -y apache2 php libapache2-mod-php php-mysql
       cp /vagrant/translate-website.conf /etc/apache2/sites-available/
-      chmod 777 /cosc349
-      chmod 777 /cosc349/www/
-      chmod 777 /cosc349/www/translate
+      chmod 777 /vagrant
+      chmod 777 /vagrant/www/
+      chmod 777 /vagrant/www/translate
       a2ensite translate-website
       a2dissite 000-default
       service apache2 reload
