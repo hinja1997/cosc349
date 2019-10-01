@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
       cp /vagrant/main-website.conf /etc/apache2/sites-available/
       chmod 777 /vagrant
       chmod 777 /vagrant/www
+      chmod 777 /vagrant/www/index.php
       a2ensite main-website
       a2dissite 000-default
       service apache2 reload
@@ -54,6 +55,7 @@ Vagrant.configure("2") do |config|
       chmod 777 /vagrant
       chmod 777 /vagrant/www/
       chmod 777 /vagrant/www/translate
+      chmod 777 /vagrant/www/translate/index.php
       a2ensite translate-website
       a2dissite 000-default
       service apache2 reload
