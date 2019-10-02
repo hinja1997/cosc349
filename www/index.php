@@ -24,7 +24,7 @@ H1 { text-align: center}
    function switchLanguages(){
         $aws = "http://ec2-3-80-211-246.compute-1.amazonaws.com"
         $language = $_POST['language'];
-        $RDS_host   = '192.168.2.31';
+        $RDS_host   = 'langtoconvert.czpquyt8dyxh.us-east-1.rds.amazonaws.com';
         $RDS_name   = 'langToConvert';
         $RDS_user   = 'admin';
         $RDS_passwd = 'rdsPassword';
@@ -54,16 +54,16 @@ H1 { text-align: center}
 
 <?php
     
-    $db_host   = '192.168.2.31';
-    $db_name   = 'fvision';
-    $db_user   = 'webuser';
-    $db_passwd = 'insecure_db_pw';
+    $RDS_host   = 'langtoconvert.czpquyt8dyxh.us-east-1.rds.amazonaws.com';
+    $RDS_name   = 'langToConvert';
+    $RDS_user   = 'admin';
+    $RDS_passwd = 'rdsPassword';
 
-    $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
+    $pdo_dsn = "mysql:host=$RDS_host;dbname=$RDS_name";
 
-    $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+    $pdo = new PDO($pdo_dsn, $RDS_user, $RDS_passwd);
 
-    $q = $pdo->query("SELECT * FROM dateToConvert");
+    $q = $pdo->query("SELECT * FROM languages");
     
     while($row = $q->fetch()) {
         $original = $row["lang"];
