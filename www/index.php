@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head><H1>Date Language Converter</H1><STYLE type="text/css">
-H1 { text-align: center}
+H1 {text-align: center}
 </STYLE></head>
 
 <body>
@@ -9,7 +9,7 @@ H1 { text-align: center}
  body { text-align: center}
 </STYLE>
 
-<?php $aws = "http://ec2-3-80-211-246.compute-1.amazonaws.com"; ?>
+<?php $aws = "http://ec2-3-86-253-83.compute-1.amazonaws.com"; ?>
 
 <p> <?php $date = file_get_contents("$aws?language=english");?> </p>
 <p><b>NZ Date in English: </b><?php echo "$date"; ?></p>
@@ -22,7 +22,7 @@ H1 { text-align: center}
     }
     
    function switchLanguages(){
-        $aws = "http://ec2-3-80-211-246.compute-1.amazonaws.com"
+        $aws = "http://ec2-3-86-253-83.compute-1.amazonaws.com"
         $language = $_POST['language'];
         $RDS_host   = 'langtoconvert.czpquyt8dyxh.us-east-1.rds.amazonaws.com';
         $RDS_name   = 'langToConvert';
