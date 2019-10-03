@@ -9,9 +9,9 @@ H1 {text-align: center}
  body { text-align: center}
 </STYLE>
 
-<?php $aws = "http://ec2-3-86-253-83.compute-1.amazonaws.com"; ?>
+<?php $aws = "http://ec2-54-163-188-114.compute-1.amazonaws.com"; ?>
 
-<p> <?php $date = file_get_contents("$aws?language=english");?> </p>
+<p> <?php $date = file_get_contents("http://ec2-54-163-188-114.compute-1.amazonaws.com?language=english");?> </p>
 <p><b>NZ Date in English: </b><?php echo "$date"; ?></p>
 
 <?php
@@ -22,7 +22,7 @@ H1 {text-align: center}
     }
     
    function switchLanguages(){
-        $aws = "http://ec2-3-86-253-83.compute-1.amazonaws.com"
+   $aws = "http://ec2-54-163-188-114.compute-1.amazonaws.com";
         $language = $_POST['language'];
         $RDS_host   = 'langtoconvert.czpquyt8dyxh.us-east-1.rds.amazonaws.com';
         $RDS_name   = 'langToConvert';
@@ -44,7 +44,7 @@ H1 {text-align: center}
             $spa = file_get_contents("$aws?language=spanish");
             $_SESSION['dates'] = "<p><b> Date in Spanish:</b> $spa </p>";
             $q = $pdo->query("UPDATE dateToConvert SET lang = 'spanish' WHERE ID='ID'");
-        } else if($language == "portugese"){
+        } else if($language == "portugese") {
             $por = file_get_contents("$aws?language=portugese");
             $_SESSION['dates'] = "<p><b> Date in Portugese:</b> $por </p>";
             $q = $pdo->query("UPDATE dateToConvert SET lang = 'portugese' WHERE ID='ID'");
@@ -63,7 +63,7 @@ H1 {text-align: center}
 
     $pdo = new PDO($pdo_dsn, $RDS_user, $RDS_passwd);
 
-    $q = $pdo->query("SELECT * FROM languages");
+    $q = $pdo->query("SELECT * FROM langToConvert");
     
     while($row = $q->fetch()) {
         $original = $row["lang"];
